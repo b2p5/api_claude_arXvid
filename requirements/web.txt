@@ -1,0 +1,29 @@
+# Web Interface Requirements
+# Include base requirements
+-r base.txt
+
+# Web Framework
+streamlit>=1.28.0
+streamlit-aggrid>=0.3.4
+
+# Enhanced Visualization
+plotly>=5.15.0
+plotly-express>=0.4.1
+
+# File Export
+openpyxl>=3.1.0
+xlsxwriter>=3.1.0
+
+# System Information
+psutil>=5.9.0
+
+# Date/Time utilities
+python-dateutil>=2.8.0
+pytz>=2023.3
+
+# Image processing
+Pillow>=10.0.0
+
+# NLP Enhancement (optional)
+spacy>=3.6.0
+# To install spaCy model: python -m spacy download en_core_web_sm

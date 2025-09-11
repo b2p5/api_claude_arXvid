@@ -1,0 +1,43 @@
+# Web Interface Requirements for arXiv Papers Analysis System
+# Core Streamlit and visualization dependencies
+
+# Web Framework
+streamlit>=1.28.0
+streamlit-aggrid>=0.3.4
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Visualization
+plotly>=5.15.0
+plotly-express>=0.4.1
+
+# Network Analysis
+networkx>=3.0
+scipy>=1.10.0
+
+# File Export
+openpyxl>=3.1.0
+xlsxwriter>=3.1.0
+
+# System Information (optional)
+psutil>=5.9.0
+
+# Additional utility libraries
+python-dateutil>=2.8.0
+pytz>=2023.3
+
+# Scientific computing (for advanced analytics)
+scikit-learn>=1.3.0
+
+# Natural Language Processing (optional for enhanced features)
+spacy>=3.6.0
+# To install spaCy model: python -m spacy download en_core_web_sm
+
+# Image processing (for potential future features)
+Pillow>=10.0.0
+
+# Development and testing
+pytest>=7.4.0
+pytest-cov>=4.1.0

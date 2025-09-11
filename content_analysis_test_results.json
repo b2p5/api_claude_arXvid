@@ -1,0 +1,118 @@
+{
+  "tests_passed": 5,
+  "tests_failed": 0,
+  "test_details": [
+    {
+      "name": "Reference Extraction",
+      "result": {
+        "success": true,
+        "references_found": 6,
+        "patterns_matched": 5,
+        "details": [
+          {
+            "raw_text": "arXiv:2106.09685",
+            "confidence": 0.9
+          },
+          {
+            "raw_text": "https://arxiv.org/abs/2301.00005",
+            "confidence": 0.7
+          },
+          {
+            "raw_text": "DOI: 10.1038/s41586-021-03819-2",
+            "confidence": 0.8
+          },
+          {
+            "raw_text": "[Brown et al., 2020]",
+            "confidence": 0.7
+          },
+          {
+            "raw_text": "(Vaswani et al., 2017)",
+            "confidence": 0.6
+          }
+        ]
+      }
+    },
+    {
+      "name": "Concept Detection",
+      "result": {
+        "success": true,
+        "concepts_found": 49,
+        "expected_matches": 12,
+        "top_concepts": [
+          [
+            "we propose a novel transformer architecture",
+            0.5333333333333333
+          ],
+          [
+            "bert",
+            0.49333333333333335
+          ],
+          [
+            "bleu",
+            0.49333333333333335
+          ],
+          [
+            "rouge",
+            0.49333333333333335
+          ],
+          [
+            "clip",
+            0.49333333333333335
+          ]
+        ]
+      }
+    },
+    {
+      "name": "Topic Classification",
+      "result": {
+        "success": true,
+        "papers_classified": 3,
+        "total_topics": 6,
+        "category_matches": 2,
+        "sample_topics": [
+          "lda_image_adversarial",
+          "cluster_nlp",
+          "lda_image_adversarial",
+          "cluster_image_adversarial",
+          "lda_reinforcement learning_reinforcement",
+          "cluster_reinforcement learning_reinforcement"
+        ]
+      }
+    },
+    {
+      "name": "Section Analysis",
+      "result": {
+        "success": true,
+        "sections_found": 8,
+        "types_matched": 5,
+        "sections_with_content": 8,
+        "section_types": [
+          "abstract",
+          "introduction",
+          "related_work",
+          "methodology",
+          "methodology",
+          "discussion",
+          "methodology",
+          "methodology"
+        ]
+      }
+    },
+    {
+      "name": "End-to-End Analysis",
+      "result": {
+        "success": true,
+        "references": 5,
+        "concepts": 21,
+        "topics": 3,
+        "sections": 4,
+        "has_summary": true,
+        "contributions": 1,
+        "technical_level": "basic",
+        "reference_quality": true,
+        "concept_quality": true
+      }
+    }
+  ],
+  "overall_success": true
+}

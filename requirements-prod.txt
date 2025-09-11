@@ -1,0 +1,17 @@
+# Production requirements for Railway deployment
+# Core dependencies
+-r requirements/base.txt
+-r requirements/fastapi.txt
+
+# Additional production dependencies
+gunicorn==21.2.0
+uvicorn[standard]==0.24.0
+
+# Google Gemini API
+google-generativeai
+
+# ArXiv integration
+arxiv
+
+# Additional production optimizations
+orjson==3.9.10

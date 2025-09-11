@@ -1,0 +1,126 @@
+{
+  "parallel_processing": {
+    "1_workers": {
+      "processing_time": 34.46824645996094,
+      "successful_pdfs": 8,
+      "total_pdfs": 8,
+      "pdfs_per_second": 0.23209767892581867,
+      "summary": {
+        "total_files": 8,
+        "successful": 8,
+        "failed": 0,
+        "success_rate": 100.0,
+        "total_time": 34.466148853302,
+        "average_processing_time": 4.098956197500229,
+        "speedup_estimate": 0.9514161190324069,
+        "operations_performed": [
+          "validate"
+        ],
+        "workers_used": 1
+      }
+    },
+    "2_workers": {
+      "processing_time": 23.868361234664917,
+      "successful_pdfs": 8,
+      "total_pdfs": 8,
+      "pdfs_per_second": 0.33517173304639364,
+      "summary": {
+        "total_files": 8,
+        "successful": 8,
+        "failed": 0,
+        "success_rate": 100.0,
+        "total_time": 23.866370677947998,
+        "average_processing_time": 4.01001638174057,
+        "speedup_estimate": 1.3441562392042246,
+        "operations_performed": [
+          "validate"
+        ],
+        "workers_used": 2
+      }
+    },
+    "4_workers": {
+      "processing_time": 18.69887089729309,
+      "successful_pdfs": 8,
+      "total_pdfs": 8,
+      "pdfs_per_second": 0.42783331913148326,
+      "summary": {
+        "total_files": 8,
+        "successful": 8,
+        "failed": 0,
+        "success_rate": 100.0,
+        "total_time": 18.697869777679443,
+        "average_processing_time": 4.701995521783829,
+        "speedup_estimate": 2.011778059293933,
+        "operations_performed": [
+          "validate"
+        ],
+        "workers_used": 4
+      }
+    },
+    "speedup_2x": 1.4440977376319162
+  },
+  "embedding_caching": {
+    "cold_cache": {
+      "time": 18.607364416122437,
+      "embeddings_computed": 5,
+      "cache_hits": 0,
+      "cache_misses": 5
+    },
+    "warm_cache": {
+      "time": 0.006026506423950195,
+      "embeddings_computed": 5,
+      "cache_hits": 5,
+      "cache_misses": 0
+    },
+    "cache_speedup": 3087.5872532341655,
+    "hit_rate_percent": 100.0
+  },
+  "intelligent_chunking": {
+    "simple_chunking": {
+      "time": 0.0020062923431396484,
+      "chunk_count": 59,
+      "avg_chunk_size": 921.457627118644
+    },
+    "intelligent_chunking": {
+      "time": 0.12932777404785156,
+      "chunk_count": 17,
+      "avg_chunk_size": 2618.235294117647
+    },
+    "quality_analysis": {
+      "total_chunks": 17,
+      "avg_chunk_length": 2618.235294117647,
+      "min_chunk_length": 245,
+      "max_chunk_length": 7392,
+      "chunk_type_distribution": {
+        "section_header": 11,
+        "unknown": 5,
+        "references": 1
+      },
+      "avg_confidence": 0.7117647058823529,
+      "sections_identified": 13
+    }
+  },
+  "database_optimization": {
+    "knowledge_graph": {
+      "optimization_time": 0.09009766578674316,
+      "indices_created": 9,
+      "before_avg_query_time": 0.0,
+      "after_avg_query_time": 0.001530289649963379,
+      "performance_improvement_percent": 0
+    }
+  },
+  "summary": {
+    "tests_run": 4,
+    "tests_successful": 4,
+    "tests_skipped": 0,
+    "tests_failed": 0,
+    "key_improvements": [
+      "Parallel processing: 1.4x speedup with 2 workers",
+      "Embedding cache: 3087.6x speedup, 100.0% hit rate",
+      "Database optimization: 0.0% query performance improvement"
+    ],
+    "recommendations": [
+      "Performance optimizations are working correctly"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+# Core arXiv Papers Analysis System Dependencies
+# For advanced features, use requirements/web.txt or requirements/dev.txt
+
+# Use base requirements for core functionality
+-r requirements/base.txt
+
+# Note: This file is maintained for backward compatibility
+# For specific installations, use:
+# - requirements/base.txt (core functionality)
+# - requirements/web.txt (web interface)
+# - requirements/dev.txt (development)
