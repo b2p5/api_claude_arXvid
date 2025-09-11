@@ -32,6 +32,7 @@ from paper_service import (
     PaperSearchResult, DownloadedPaper, get_paper_service
 )
 from reset_api import router as reset_router
+from document_processor import get_processing_service, process_document_background
 
 
 # Initialize configuration and logger
@@ -351,18 +352,16 @@ async def upload_pdf(
     category: str,
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
-    current_user: dict = Depends(get_current_active_user),
-    rag_processor: OptimizedRAGProcessor = Depends(get_rag_processor)
+    current_user: dict = Depends(get_current_active_user)
 ):
     """
-    Upload a PDF file for the authenticated user.
+    Upload a PDF file for the authenticated user with improved processing tracking.
     
     Args:
         category: Document category/topic
         file: PDF file to upload
         background_tasks: Background task handler
         current_user: Authenticated user
-        rag_processor: RAG processor dependency
     """
     if not file.filename.endswith('.pdf'):
         raise HTTPException(status_code=400, detail="Only PDF files are allowed")
@@ -386,25 +385,115 @@ async def upload_pdf(
             content = await file.read()
             await f.write(content)
         
-        # Validate PDF in background
-        background_tasks.add_task(validate_and_process_pdf, file_path, username, rag_processor)
+        # Create processing task
+        processing_service = get_processing_service()
+        task_id = processing_service.create_processing_task(
+            username=username,
+            file_path=file_path,
+            category=category,
+            filename=file.filename
+        )
+        
+        # Start processing in background
+        background_tasks.add_task(process_document_background, task_id)
         
         log_info("PDF uploaded successfully", 
                 username=username, 
                 category=category, 
-                filename=file.filename)
+                filename=file.filename,
+                task_id=task_id)
         
         return {
             "message": "PDF uploaded successfully",
             "filename": file.filename,
             "category": category,
             "username": username,
-            "processing": "started_in_background"
+            "task_id": task_id,
+            "processing_status": "pending"
         }
         
     except Exception as e:
         log_error("PDF upload failed", username=username, error=str(e))
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
+
+
+@app.get("/processing-status/{task_id}")
+async def get_processing_status(
+    task_id: str,
+    current_user: dict = Depends(get_current_active_user)
+):
+    """Get the processing status of a document."""
+    try:
+        processing_service = get_processing_service()
+        status = processing_service.get_task_status(task_id)
+        
+        if not status:
+            raise HTTPException(status_code=404, detail="Task not found")
+        
+        # Verify user owns this task
+        username = get_username_from_user(current_user)
+        if status['username'] != username:
+            raise HTTPException(status_code=403, detail="Not authorized to view this task")
+        
+        return status
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        log_error("Failed to get processing status", task_id=task_id, error=str(e))
+        raise HTTPException(status_code=500, detail="Failed to get status")
+
+
+@app.get("/my-processing-tasks")
+async def get_my_processing_tasks(
+    status: Optional[str] = None,
+    current_user: dict = Depends(get_current_active_user)
+):
+    """Get all processing tasks for the current user."""
+    try:
+        username = get_username_from_user(current_user)
+        processing_service = get_processing_service()
+        
+        from document_processor import ProcessingStatus
+        status_filter = None
+        if status:
+            try:
+                status_filter = ProcessingStatus(status)
+            except ValueError:
+                raise HTTPException(status_code=400, detail=f"Invalid status: {status}")
+        
+        tasks = processing_service.get_user_tasks(username, status_filter)
+        
+        return {
+            "tasks": tasks,
+            "total": len(tasks),
+            "username": username
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        log_error("Failed to get user processing tasks", username=username, error=str(e))
+        raise HTTPException(status_code=500, detail="Failed to get tasks")
+
+
+@app.get("/processing-stats")
+async def get_processing_stats(
+    current_user: dict = Depends(get_current_active_user)
+):
+    """Get processing statistics for the system."""
+    try:
+        processing_service = get_processing_service()
+        stats = processing_service.get_processing_stats()
+        
+        return {
+            "processing_stats": stats,
+            "user": get_username_from_user(current_user)
+        }
+        
+    except Exception as e:
+        log_error("Failed to get processing stats", error=str(e))
+        raise HTTPException(status_code=500, detail="Failed to get stats")
 
 
 async def validate_and_process_pdf(file_path: str, username: str, rag_processor: OptimizedRAGProcessor):
