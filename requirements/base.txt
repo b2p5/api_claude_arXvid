@@ -10,11 +10,12 @@ scipy>=1.10.0
 # Vector Database & Embeddings
 chromadb
 sentence-transformers
-langchain-huggingface
 
 # LLM Integration
-langchain
-langchain-deepseek
+langchain>=0.3.0
+langchain-core>=0.3.70
+langchain-deepseek>=0.1.4
+langchain-community
 
 # Document Processing
 pypdf

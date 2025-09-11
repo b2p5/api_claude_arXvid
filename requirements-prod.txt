@@ -1,17 +1,72 @@
 # Production requirements for Railway deployment
-# Core dependencies
--r requirements/base.txt
--r requirements/fastapi.txt
 
-# Additional production dependencies
-gunicorn==21.2.0
+# FastAPI and ASGI server
+fastapi==0.104.1
 uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+
+# File upload and handling
+python-multipart==0.0.6
+aiofiles==23.2.1
+
+# Request/Response validation
+pydantic==2.5.0
+
+# HTTP client for async operations
+httpx==0.25.2
+
+# CORS and middleware
+starlette==0.27.0
+
+# Authentication (JWT tokens and password hashing)
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+PyJWT==2.8.0
+email-validator==2.1.0
+
+# Data Science & ML
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+scipy>=1.10.0
+
+# Vector Database & Embeddings
+chromadb
+sentence-transformers
+
+# LLM Integration - Compatible versions
+langchain>=0.3.0
+langchain-core>=0.3.70
+langchain-deepseek>=0.1.4
+langchain-community
+
+# Document Processing
+pypdf
+
+# Configuration & Environment
+python-dotenv
+
+# Network Analysis
+networkx>=3.0
+matplotlib
+
+# Visualization (basic)
+pyvis
 
 # Google Gemini API
 google-generativeai
 
 # ArXiv integration
 arxiv
+
+# Additional utilities
+python-dateutil>=2.8.0
+pytz>=2023.3
+python-slugify==8.0.1
+Unidecode==1.3.7
+
+# Performance monitoring
+psutil>=5.9.0
 
 # Additional production optimizations
 orjson==3.9.10
