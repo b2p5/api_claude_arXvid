@@ -125,7 +125,7 @@ def validate_system():
     # 6. Test model loading (quick test)
     print(f"\nTesting model initialization...")
     try:
-        from langchain_huggingface import HuggingFaceEmbeddings
+        from langchain_community.embeddings import HuggingFaceEmbeddings
         embeddings = HuggingFaceEmbeddings(model_name=config.models.embedding_model_name)
         print(f"  [OK] Embedding model '{config.models.embedding_model_name}' loaded successfully")
     except Exception as e:

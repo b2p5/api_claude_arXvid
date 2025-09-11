@@ -507,7 +507,7 @@ class CachedEmbeddingModel:
     def _get_model(self):
         """Lazy loading of the embedding model."""
         if self._model is None:
-            from langchain_huggingface import HuggingFaceEmbeddings
+            from langchain_community.embeddings import HuggingFaceEmbeddings
             self._model = HuggingFaceEmbeddings(model_name=self.model_name)
         return self._model
     

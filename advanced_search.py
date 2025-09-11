@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 import chromadb
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 

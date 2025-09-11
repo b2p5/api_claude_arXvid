@@ -360,7 +360,7 @@ class ParallelEmbeddingProcessor:
     def compute_embeddings_batch(self, texts: List[str]) -> List[List[float]]:
         """Compute embeddings for a batch of texts."""
         try:
-            from langchain_huggingface import HuggingFaceEmbeddings
+            from langchain_community.embeddings import HuggingFaceEmbeddings
             
             # Initialize embeddings model in worker process
             embeddings_model = HuggingFaceEmbeddings(model_name=self.model_name)

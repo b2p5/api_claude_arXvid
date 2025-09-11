@@ -4,7 +4,9 @@
       "Bash(pip install:*)",
       "Bash(python run_fastapi.py:*)",
       "Bash(python test:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
