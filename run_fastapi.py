@@ -7,6 +7,10 @@ Provides convenient startup with configuration options.
 import argparse
 import sys
 import os
+
+# Add the 'src' directory to the Python path to resolve imports
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
+
 import uvicorn
 from config import get_config, load_config
 from logger import get_logger, log_info, log_error
@@ -98,7 +102,7 @@ def main():
         
         # Server configuration
         server_config = {
-            "app": "main:app",
+            "app": "api.main:app",
             "host": host,
             "port": port,
             "reload": reload,

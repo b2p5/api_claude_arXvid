@@ -1,5 +1,9 @@
 import argparse
 import os
+import sys
+
+# Add project root to sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import chromadb
 import dotenv
@@ -9,7 +13,7 @@ from langchain.schema.runnable import RunnablePassthrough
 from langchain_deepseek import ChatDeepSeek
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
-from config import get_config
+from src.config import get_config
 
 def get_retriever(db_path=None, model_name=None):
     """Initializes a retriever for the ChromaDB vector store."""
@@ -22,7 +26,7 @@ def get_retriever(db_path=None, model_name=None):
         model_name = config.models.embedding_model_name
     
     if not os.path.exists(db_path):
-        raise FileNotFoundError(f"Database path not found: {db_path}. Please create it first using rag_bbdd_vector.py")
+        raise FileNotFoundError(f"Database path not found: {db_path}. Please create it first using 'python src/administration/indexing/rag_bbdd_vector_optimized.py'")
 
     embedding_function = HuggingFaceEmbeddings(model_name=model_name)
     db = chromadb.PersistentClient(path=db_path)

@@ -10,22 +10,22 @@ import importlib
 import os
 from pathlib import Path
 
+# Add the 'src' directory to the Python path to resolve imports
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
+
 
 def check_dependencies():
     """Check if all required dependencies are installed."""
     required_packages = [
         'streamlit',
-        'pandas', 
+        'pandas',
         'plotly',
         'networkx',
-        'sqlite3',  # Built-in with Python
     ]
     
     missing_packages = []
     
     for package in required_packages:
-        if package == 'sqlite3':
-            continue  # Built-in module
         try:
             importlib.import_module(package)
             print(f"[OK] {package}")
@@ -69,6 +69,7 @@ def install_missing_packages(packages):
 def check_system_requirements():
     """Check system requirements and setup."""
     checks = []
+    project_root = Path(__file__).parent
     
     # Check Python version
     python_version = sys.version_info
@@ -77,26 +78,33 @@ def check_system_requirements():
     else:
         checks.append(("Python Version", False, f"Python {python_version.major}.{python_version.minor} (3.8+ required)"))
     
-    # Check if knowledge graph database exists
-    db_file = Path(__file__).parent / "knowledge_graph.db"
-    checks.append(("Knowledge Graph DB", db_file.exists(), str(db_file)))
-    
-    # Check config file
-    config_file = Path(__file__).parent / "config.py"
-    checks.append(("Configuration", config_file.exists(), str(config_file)))
-    
-    # Check core analysis modules
-    core_modules = ["content_analysis.py", "enhanced_rag_processor.py", "logger.py"]
-    for module in core_modules:
-        module_path = Path(__file__).parent / module
-        checks.append((f"Module: {module}", module_path.exists(), str(module_path)))
+    # Dynamically import config to get DB path
+    try:
+        from config import get_config
+        config = get_config()
+        db_path = project_root / config.database.knowledge_db_dir / config.database.knowledge_db_file
+        checks.append(("Knowledge Graph DB", db_path.exists(), str(db_path)))
+    except (ImportError, AttributeError):
+        db_path_fallback = project_root / "db" / "knowledge" / "knowledge_graph.sqlite"
+        checks.append(("Knowledge Graph DB", False, f"Could not load from config, checked fallback: {db_path_fallback}"))
+
+    # Check core modules in their new locations
+    core_modules = {
+        "src/config.py": "Configuration",
+        "src/core/analysis/content_analysis.py": "Module: content_analysis",
+        "src/core/rag/enhanced_rag_processor.py": "Module: enhanced_rag_processor",
+        "src/logger.py": "Module: logger"
+    }
+    for path, name in core_modules.items():
+        module_path = project_root / path
+        checks.append((name, module_path.exists(), str(module_path)))
     
     return checks
 
 
 def launch_streamlit():
     """Launch the Streamlit web interface."""
-    web_interface_path = Path(__file__).parent / "web_interface.py"
+    web_interface_path = Path(__file__).parent / "src" / "web" / "web_interface.py"
     
     if not web_interface_path.exists():
         print(f"[ERROR] Web interface file not found: {web_interface_path}")
@@ -138,6 +146,9 @@ def main():
         print("[ERROR] Python 3.8 or higher is required")
         return 1
     
+    # Change to the script directory to ensure relative paths work
+    os.chdir(Path(__file__).parent)
+    
     # Check system requirements
     print("[CHECK] Checking system requirements...")
     system_checks = check_system_requirements()
@@ -153,8 +164,8 @@ def main():
         print("\n[WARNING] Some system requirements are missing.")
         print("Please ensure you have:")
         print("- Processed some papers (run the main analysis first)")
-        print("- All required configuration files")
-        print("- Core analysis modules")
+        print("- All required configuration files in the 'src' directory")
+        print("- Core analysis modules in their correct 'src/core' paths")
         
         response = input("\nContinue anyway? (y/N): ")
         if response.lower() != 'y':
@@ -185,9 +196,6 @@ def main():
     
     # All checks passed, launch the interface
     print("\n[SUCCESS] All systems ready!")
-    
-    # Change to the script directory
-    os.chdir(Path(__file__).parent)
     
     # Launch Streamlit interface
     success = launch_streamlit()
