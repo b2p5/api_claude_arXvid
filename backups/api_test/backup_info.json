@@ -1,0 +1,9 @@
+{
+  "created_at": "2025-09-11T20:27:33.734866",
+  "backup_name": "api_test",
+  "config": {
+    "documents_root": "documentos",
+    "vector_db_path": "db/chroma",
+    "knowledge_db_path": "db/knowledge\\knowledge_graph.sqlite"
+  }
+}

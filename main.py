@@ -31,6 +31,7 @@ from paper_service import (
     PaperService, PaperSearchRequest, PaperDownloadRequest,
     PaperSearchResult, DownloadedPaper, get_paper_service
 )
+from reset_api import router as reset_router
 
 
 # Initialize configuration and logger
@@ -68,6 +69,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include reset API router
+app.include_router(reset_router)
 
 
 def normalize_username(username: str) -> str:
