@@ -270,7 +270,7 @@ async def get_reset_status(
             cache_size = sum(f.stat().st_size for f in cache_path.rglob("*") if f.is_file())
         
         users_db_size = 0
-        users_db_path = Path("users.db")
+        users_db_path = Path("db/users.db")
         if users_db_path.exists():
             users_db_size = users_db_path.stat().st_size
         

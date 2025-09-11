@@ -50,7 +50,7 @@ class DocumentProcessingService:
     def __init__(self):
         self.config = get_config()
         self.logger = get_logger()
-        self.processing_db_path = "document_processing.db"
+        self.processing_db_path = "db/document_processing.db"
         self._init_processing_database()
         
     def _init_processing_database(self):

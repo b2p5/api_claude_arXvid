@@ -19,7 +19,7 @@ from logger import get_logger, log_info, log_error
 JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', secrets.token_urlsafe(32))
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRATION_HOURS = 24
-AUTH_DB_PATH = "users.db"
+AUTH_DB_PATH = "db/users.db"
 
 logger = get_logger()
 security = HTTPBearer()

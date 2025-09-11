@@ -68,7 +68,7 @@ class SystemResetService:
                 log_info("Backed up knowledge database", path=str(knowledge_db_path))
             
             # Users DB
-            users_db_path = Path("users.db")
+            users_db_path = Path("db/users.db")
             if users_db_path.exists():
                 shutil.copy2(users_db_path, db_backup_dir / "users.db")
                 log_info("Backed up users database")
@@ -221,7 +221,7 @@ class SystemResetService:
         stats = {"users_deleted": 0, "errors": []}
         
         try:
-            users_db_path = Path("users.db")
+            users_db_path = Path("db/users.db")
             
             if users_db_path.exists():
                 # Count users before deletion
