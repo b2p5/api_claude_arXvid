@@ -8,12 +8,16 @@ import os
 import tempfile
 import time
 from pathlib import Path
+import sys
 
-from config import get_config
-from logger import get_logger, log_info, log_error, log_warning
-from retry_utils import download_with_retry, safe_execute, retry_on_exception, RetryConfig
-from pdf_validator import validate_pdf, PDFValidator
-from llm_utils import extract_paper_entities_safe
+# Add project root to sys.path to allow importing from src
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from src.config import get_config
+from src.logger import get_logger, log_info, log_error, log_warning
+from src.retry_utils import download_with_retry, safe_execute, retry_on_exception, RetryConfig
+from src.core.analysis.pdf_validator import validate_pdf, PDFValidator
+from src.core.llm_utils import extract_paper_entities_safe
 
 def test_logging_system():
     """Test the logging system."""
