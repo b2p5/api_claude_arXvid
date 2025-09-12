@@ -29,6 +29,7 @@ from enhanced_rag_processor import EnhancedRAGProcessor
 from content_analysis_db import ContentAnalysisDatabase
 from content_analysis import ContentAnalysisEngine
 import knowledge_graph
+from administration.system.reset_service import SystemResetService
 
 
 class WebInterface:
@@ -40,6 +41,7 @@ class WebInterface:
         self.processor = None
         self.db = None
         self.analysis_db = None
+        self.reset_service = SystemResetService()
         
         # Initialize session state
         if 'initialized' not in st.session_state:
@@ -86,6 +88,8 @@ class WebInterface:
             self._render_export_reports()
         elif page == "System Settings":
             self._render_system_settings()
+        elif page == "Administration":
+            self._render_administration_page()
     
     def _get_custom_css(self) -> str:
         """Return custom CSS for the interface."""
@@ -150,7 +154,8 @@ class WebInterface:
                 "🔍 Content Analysis": "Content Analysis",
                 "🕸️ Knowledge Graph": "Knowledge Graph",
                 "📤 Export & Reports": "Export & Reports",
-                "⚙️ System Settings": "System Settings"
+                "⚙️ System Settings": "System Settings",
+                "👑 Administration": "Administration"
             }
             
             for display_name, page_name in pages.items():
@@ -2106,6 +2111,87 @@ class WebInterface:
             
         except Exception as e:
             st.error(f"References export failed: {e}")
+
+    def _render_administration_page(self):
+        """Render the administration page for system reset tasks."""
+        st.header("👑 System Administration")
+
+        st.warning("**DANGER ZONE**: These actions are irreversible and can lead to data loss.")
+
+        # Full System Reset
+        st.subheader("💥 Full System Reset")
+        st.markdown("This will reset the entire system, including all documents, databases, and caches.")
+        backup_checkbox = st.checkbox("Create backup before reset", value=True)
+        
+        if st.button("Perform Full System Reset"):
+            with st.expander("Confirm Full System Reset", expanded=True):
+                st.error("Are you absolutely sure? This cannot be undone.")
+                if st.button("I confirm, proceed with full reset"):
+                    with st.spinner("Performing full system reset..."):
+                        stats = self.reset_service.full_system_reset(create_backup_first=backup_checkbox)
+                        st.success("Full system reset completed!")
+                        st.json(stats)
+
+        st.markdown("---")
+
+        # Component Reset
+        st.subheader("🧨 Component Reset")
+        st.markdown("Reset individual components of the system.")
+        
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            if st.button("Reset Documents"):
+                with st.spinner("Resetting documents..."):
+                    stats = self.reset_service.reset_documents()
+                    st.success("Documents reset completed!")
+                    st.json(stats)
+            if st.button("Reset Vector DB"):
+                with st.spinner("Resetting vector database..."):
+                    stats = self.reset_service.reset_vector_database()
+                    st.success("Vector database reset completed!")
+                    st.json(stats)
+        with col2:
+            if st.button("Reset Knowledge DB"):
+                with st.spinner("Resetting knowledge database..."):
+                    stats = self.reset_service.reset_knowledge_database()
+                    st.success("Knowledge database reset completed!")
+                    st.json(stats)
+            if st.button("Reset Users DB"):
+                with st.spinner("Resetting users database..."):
+                    stats = self.reset_service.reset_users_database()
+                    st.success("Users database reset completed!")
+                    st.json(stats)
+        with col3:
+            if st.button("Reset Embeddings Cache"):
+                with st.spinner("Resetting embeddings cache..."):
+                    stats = self.reset_service.reset_embeddings_cache()
+                    st.success("Embeddings cache reset completed!")
+                    st.json(stats)
+
+        st.markdown("---")
+
+        # User Reset
+        st.subheader("👤 User Data Reset")
+        username_input = st.text_input("Username", placeholder="Enter username to reset")
+        if st.button("Reset User Documents"):
+            if username_input:
+                with st.spinner(f"Resetting documents for user {username_input}..."):
+                    stats = self.reset_service.reset_documents(username=username_input)
+                    st.success(f"Document reset for user {username_input} completed!")
+                    st.json(stats)
+            else:
+                st.error("Please enter a username.")
+
+        st.markdown("---")
+
+        # Backup
+        st.subheader("💾 Create Backup")
+        backup_name_input = st.text_input("Backup Name (optional)", placeholder="e.g., pre-migration-backup")
+        if st.button("Create Backup"):
+            with st.spinner("Creating backup..."):
+                backup_name = backup_name_input if backup_name_input else None
+                backup_path = self.reset_service.create_backup(backup_name=backup_name)
+                st.success(f"Backup created successfully at: {backup_path}")
 
 
 def main():
