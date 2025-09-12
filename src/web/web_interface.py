@@ -20,15 +20,15 @@ from pathlib import Path
 import sys
 import os
 
-# Add project root to path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+# Add src directory to path for module resolution
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from config import get_config
 from logger import get_logger
-from enhanced_rag_processor import EnhancedRAGProcessor
-from content_analysis_db import ContentAnalysisDatabase
-from content_analysis import ContentAnalysisEngine
-import knowledge_graph
+from core.rag.enhanced_rag_processor import EnhancedRAGProcessor
+from core.analysis.content_analysis_db import ContentAnalysisDatabase
+from core.analysis.content_analysis import ContentAnalysisEngine
+from core.analysis import knowledge_graph
 from administration.system.reset_service import SystemResetService
 
 
@@ -727,7 +727,7 @@ class WebInterface:
                 self._run_advanced_analysis(analysis_type, time_filter)
         
         # Display results based on analysis type
-        if hasattr(st.session_state, 'analysis_results'):
+        if st.session_state.analysis_results:
             self._display_advanced_analysis_results()
     
     def _run_advanced_analysis(self, analysis_type: str, time_filter: str):

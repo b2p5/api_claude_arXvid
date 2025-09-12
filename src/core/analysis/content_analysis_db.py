@@ -8,9 +8,9 @@ import json
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 
-from content_analysis import ContentAnalysis, Reference, Concept, Topic, Section, SectionType
+from core.analysis.content_analysis import ContentAnalysis, Reference, Concept, Topic, Section, SectionType
 from logger import get_logger, log_info, log_warning, log_error
-import knowledge_graph
+from core.analysis import knowledge_graph
 
 
 class ContentAnalysisDatabase:

@@ -17,22 +17,22 @@ import aiofiles
 
 from config import get_config
 from logger import get_logger, log_info, log_error
-from rag_bbdd_vector_optimized import OptimizedRAGProcessor
-from enhanced_rag_processor import EnhancedRAGProcessor
-from chat_with_advanced_search import AdvancedChatRAG
-from advanced_search import AdvancedSearchEngine
-from knowledge_graph import create_database
-from pdf_validator import validate_pdf
-from auth import (
+from administration.indexing.rag_bbdd_vector_optimized import OptimizedRAGProcessor
+from core.rag.enhanced_rag_processor import EnhancedRAGProcessor
+# from scripts.chat_with_advanced_search import AdvancedChatRAG
+from core.search.advanced_search import AdvancedSearchEngine
+from core.analysis.knowledge_graph import create_database
+from core.analysis.pdf_validator import validate_pdf
+from core.auth import (
     UserCreate, UserLogin, Token, User,
     register_user, login_user, get_current_active_user, get_username_from_user
 )
-from paper_service import (
+from core.paper_service import (
     PaperService, PaperSearchRequest, PaperDownloadRequest,
     PaperSearchResult, DownloadedPaper, get_paper_service
 )
-from reset_api import router as reset_router
-from document_processor import get_processing_service, process_document_background
+from administration.system.reset_api import router as reset_router
+from core.analysis.document_processor import get_processing_service, process_document_background
 
 
 # Initialize configuration and logger

@@ -43,7 +43,7 @@ from langchain.schema.output_parser import StrOutputParser
 
 from config import get_config
 from logger import get_logger, log_info, log_warning, log_error
-import knowledge_graph
+from core.analysis import knowledge_graph
 
 
 class SectionType(Enum):

@@ -13,11 +13,11 @@ from langchain_community.document_loaders import PyPDFLoader
 
 from config import get_config
 from logger import get_logger, log_info, log_warning, log_error
-from pdf_validator import validate_pdf
-from parallel_processing import ProcessingResult
-from content_analysis import ContentAnalysisEngine, ContentAnalysis
-from content_analysis_db import ContentAnalysisDatabase
-import knowledge_graph
+from core.analysis.pdf_validator import validate_pdf
+from core.parallel_processing import ProcessingResult
+from core.analysis.content_analysis import ContentAnalysisEngine, ContentAnalysis
+from core.analysis.content_analysis_db import ContentAnalysisDatabase
+from core.analysis import knowledge_graph
 
 
 class EnhancedRAGProcessor:
