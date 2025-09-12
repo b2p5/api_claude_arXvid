@@ -2,6 +2,7 @@
 """
 Launcher script for the arXiv Papers Analysis Web Interface.
 Checks dependencies and launches the Streamlit application.
+
 """
 
 import sys
