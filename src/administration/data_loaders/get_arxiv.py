@@ -9,7 +9,7 @@ from datetime import datetime
 from config import get_config
 from logger import get_logger, log_info, log_error, log_warning
 from retry_utils import download_with_retry
-from pdf_validator import validate_pdf
+from core.analysis.pdf_validator import validate_pdf
 
 def search_arxiv(query):
     """

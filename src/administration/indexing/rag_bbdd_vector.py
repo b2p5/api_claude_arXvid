@@ -13,12 +13,12 @@ from langchain.prompts import PromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from config import get_config
 from logger import get_logger, log_info, log_error, log_warning
-from pdf_validator import validate_pdf
-from llm_utils import extract_paper_entities_safe
+from core.analysis.pdf_validator import validate_pdf
+from core.llm_utils import extract_paper_entities_safe
 from retry_utils import safe_execute
 
 # Import and initialize the knowledge graph
-import knowledge_graph
+from core.analysis import knowledge_graph
 
 # --- LLM for Entity Extraction ---
 config = get_config()

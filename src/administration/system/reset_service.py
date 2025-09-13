@@ -15,8 +15,8 @@ from pathlib import Path
 import json
 
 import chromadb
-from config import get_config
-from logger import get_logger, log_info, log_warning, log_error
+from src.config import get_config
+from src.logger import get_logger, log_info, log_warning, log_error
 
 
 class SystemResetService:

@@ -23,16 +23,16 @@ from langchain.schema.output_parser import StrOutputParser
 
 from config import get_config
 from logger import get_logger, log_info, log_error, log_warning
-from pdf_validator import validate_pdf
-from llm_utils import extract_paper_entities_safe
+from core.analysis.pdf_validator import validate_pdf
+from core.llm_utils import extract_paper_entities_safe
 from retry_utils import safe_execute
-from parallel_processing import process_pdfs_parallel, ParallelEmbeddingProcessor
-from embedding_cache import get_embedding_cache, CachedEmbeddingModel
-from intelligent_chunking import create_intelligent_splitter, analyze_chunking_quality
-from database_optimizer import optimize_all_databases
+from core.parallel_processing import process_pdfs_parallel, ParallelEmbeddingProcessor
+from core.rag.embedding_cache import get_embedding_cache, CachedEmbeddingModel
+from core.analysis.intelligent_chunking import create_intelligent_splitter, analyze_chunking_quality
+from administration.indexing.database_optimizer import optimize_all_databases
 
 # Import and initialize the knowledge graph
-import knowledge_graph
+from core.analysis import knowledge_graph
 
 
 class OptimizedRAGProcessor:

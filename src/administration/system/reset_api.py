@@ -9,8 +9,8 @@ from typing import Optional, Dict, Any, List
 from enum import Enum
 import json
 
-from reset_service import SystemResetService
-from auth import get_current_active_user
+from administration.system.reset_service import SystemResetService
+from core.auth import get_current_active_user
 from logger import get_logger, log_info, log_warning, log_error
 
 

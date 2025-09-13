@@ -8,10 +8,10 @@ from typing import List, Dict, Any, Optional, AsyncGenerator
 from concurrent.futures import ThreadPoolExecutor
 import json
 
-from enhanced_rag_processor import EnhancedRAGProcessor
-from advanced_search import AdvancedSearchEngine
-from content_analysis import ContentAnalysisEngine
-from knowledge_graph import get_db_connection
+from core.rag.enhanced_rag_processor import EnhancedRAGProcessor
+from core.search.advanced_search import AdvancedSearchEngine
+from core.analysis.content_analysis import ContentAnalysisEngine
+from core.analysis.knowledge_graph import get_db_connection
 from logger import get_logger, log_info, log_error
 
 logger = get_logger()

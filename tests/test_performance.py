@@ -14,10 +14,10 @@ import statistics
 
 from config import get_config
 from logger import get_logger, log_info, log_warning
-from parallel_processing import process_pdfs_parallel, get_optimal_worker_count
-from embedding_cache import get_embedding_cache, CachedEmbeddingModel
-from intelligent_chunking import create_intelligent_splitter, analyze_chunking_quality
-from database_optimizer import SQLiteOptimizer, optimize_all_databases
+from core.parallel_processing import process_pdfs_parallel, get_optimal_worker_count
+from core.rag.embedding_cache import get_embedding_cache, CachedEmbeddingModel
+from core.analysis.intelligent_chunking import create_intelligent_splitter, analyze_chunking_quality
+from administration.indexing.database_optimizer import SQLiteOptimizer, optimize_all_databases
 
 
 class PerformanceTester:

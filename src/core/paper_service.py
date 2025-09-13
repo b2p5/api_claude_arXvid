@@ -15,9 +15,9 @@ from pydantic import BaseModel
 
 from config import get_config
 from logger import get_logger, log_info, log_error, log_warning
-from get_arxiv import search_arxiv, save_and_download_results
-from pdf_validator import validate_pdf
-from auth import get_username_from_user
+from administration.data_loaders.get_arxiv import search_arxiv, save_and_download_results
+from core.analysis.pdf_validator import validate_pdf
+from core.auth import get_username_from_user
 
 
 # Pydantic models

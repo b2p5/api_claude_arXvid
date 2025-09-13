@@ -141,7 +141,7 @@ def test_database_schema():
     
     try:
         import sqlite3
-        import knowledge_graph
+        from src.core.analysis import knowledge_graph
         
         # Check if database exists
         db_path = knowledge_graph.DB_FILE
@@ -280,4 +280,4 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"[ERROR] Test suite failed: {e}")
         traceback.print_exc()
-        exit(1)
+        exit(1)(1)

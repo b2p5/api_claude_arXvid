@@ -15,11 +15,11 @@ from langchain.prompts import PromptTemplate
 from langchain.schema.runnable import RunnablePassthrough
 from langchain.schema.output_parser import StrOutputParser
 
-from config import get_config
-from logger import get_logger, log_info, log_warning, log_error
-from advanced_search import AdvancedSearchEngine, SearchMode, SearchResult
-from search_filters import AdvancedSearchFilters, DateRangePreset, SmartFilterEngine
-from search_ranking import RankingStrategy, RankingWeights, RankingConfig
+from src.config import get_config
+from src.logger import get_logger, log_info, log_warning, log_error
+from src.core.search.advanced_search import AdvancedSearchEngine, SearchMode, SearchResult
+from src.core.search.search_filters import AdvancedSearchFilters, DateRangePreset, SmartFilterEngine
+from src.core.search.search_ranking import RankingStrategy, RankingWeights, RankingConfig
 
 
 class AdvancedChatRAG:
@@ -380,86 +380,86 @@ class AdvancedChatRAG:
     def _get_general_prompt_template(self) -> str:
         """Get general purpose prompt template."""
         return """
-You are a knowledgeable research assistant specializing in academic papers. Answer the question based on the provided research papers context.
+        You are a knowledgeable research assistant specializing in academic papers. Answer the question based on the provided research papers context.
 
-CONTEXT FROM RESEARCH PAPERS:
-{context}
+        CONTEXT FROM RESEARCH PAPERS:
+        {context}
 
-QUESTION:
-{question}
+        QUESTION:
+        {question}
 
-Please provide a comprehensive answer that:
-1. Directly addresses the question
-2. References specific papers when relevant
-3. Synthesizes information from multiple sources if applicable
-4. Indicates confidence level in your answer
-5. Suggests related topics if helpful
+        Please provide a comprehensive answer that:
+        1. Directly addresses the question
+        2. References specific papers when relevant
+        3. Synthesizes information from multiple sources if applicable
+        4. Indicates confidence level in your answer
+        5. Suggests related topics if helpful
 
-ANSWER:
-"""
+        ANSWER:
+        """
     
     def _get_comparison_prompt_template(self) -> str:
         """Get comparison-focused prompt template."""
         return """
-You are a research assistant expert at comparing academic approaches. Based on the provided papers, create a detailed comparison.
+        You are a research assistant expert at comparing academic approaches. Based on the provided papers, create a detailed comparison.
 
-CONTEXT FROM RESEARCH PAPERS:
-{context}
+        CONTEXT FROM RESEARCH PAPERS:
+        {context}
 
-COMPARISON REQUEST:
-{question}
+        COMPARISON REQUEST:
+        {question}
 
-Please provide a structured comparison that includes:
-1. Key similarities between the approaches/papers
-2. Main differences and their implications
-3. Strengths and weaknesses of each approach
-4. Use cases where each might be preferred
-5. Overall assessment with evidence from the papers
+        Please provide a structured comparison that includes:
+        1. Key similarities between the approaches/papers
+        2. Main differences and their implications
+        3. Strengths and weaknesses of each approach
+        4. Use cases where each might be preferred
+        5. Overall assessment with evidence from the papers
 
-COMPARISON ANALYSIS:
-"""
+        COMPARISON ANALYSIS:
+        """
     
     def _get_summary_prompt_template(self) -> str:
         """Get summary-focused prompt template."""
         return """
-You are a research assistant skilled at synthesizing academic literature. Provide a comprehensive summary based on the research papers.
+        You are a research assistant skilled at synthesizing academic literature. Provide a comprehensive summary based on the research papers.
 
-CONTEXT FROM RESEARCH PAPERS:
-{context}
+        CONTEXT FROM RESEARCH PAPERS:
+        {context}
 
-SUMMARY REQUEST:
-{question}
+        SUMMARY REQUEST:
+        {question}
 
-Please provide a well-structured summary that includes:
-1. Main concepts and key findings
-2. Methodological approaches used
-3. Important results and their significance
-4. Current state of the field based on these papers
-5. Future directions or open questions mentioned
+        Please provide a well-structured summary that includes:
+        1. Main concepts and key findings
+        2. Methodological approaches used
+        3. Important results and their significance
+        4. Current state of the field based on these papers
+        5. Future directions or open questions mentioned
 
-SUMMARY:
-"""
+        SUMMARY:
+        """
     
     def _get_recommendation_prompt_template(self) -> str:
         """Get recommendation-focused prompt template."""
         return """
-You are a research advisor helping with paper recommendations. Based on the search results, provide thoughtful recommendations.
+        You are a research advisor helping with paper recommendations. Based on the search results, provide thoughtful recommendations.
 
-CONTEXT FROM RESEARCH PAPERS:
-{context}
+        CONTEXT FROM RESEARCH PAPERS:
+        {context}
 
-RECOMMENDATION REQUEST:
-{question}
+        RECOMMENDATION REQUEST:
+        {question}
 
-Please provide recommendations that include:
-1. Top recommended papers with clear justification
-2. Reading order if multiple papers are suggested
-3. What to focus on in each paper
-4. How these papers relate to the user's interests
-5. Additional search suggestions for deeper exploration
+        Please provide recommendations that include:
+        1. Top recommended papers with clear justification
+        2. Reading order if multiple papers are suggested
+        3. What to focus on in each paper
+        4. How these papers relate to the user's interests
+        5. Additional search suggestions for deeper exploration
 
-RECOMMENDATIONS:
-"""
+        RECOMMENDATIONS:
+        """
     
     def _update_chat_history(
         self, 

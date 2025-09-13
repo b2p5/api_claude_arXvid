@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 """
 FastAPI application for RAG system with Gemini and ArXiv papers.
 Multi-user support with username-based folder structure.
@@ -19,7 +23,7 @@ from config import get_config
 from logger import get_logger, log_info, log_error
 from administration.indexing.rag_bbdd_vector_optimized import OptimizedRAGProcessor
 from core.rag.enhanced_rag_processor import EnhancedRAGProcessor
-# from scripts.chat_with_advanced_search import AdvancedChatRAG
+from scripts.chat_with_advanced_search import AdvancedChatRAG
 from core.search.advanced_search import AdvancedSearchEngine
 from core.analysis.knowledge_graph import create_database
 from core.analysis.pdf_validator import validate_pdf

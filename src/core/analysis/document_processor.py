@@ -15,8 +15,8 @@ from pathlib import Path
 import json
 from dataclasses import dataclass
 
-from rag_bbdd_vector_optimized import OptimizedRAGProcessor
-from pdf_validator import validate_pdf
+from administration.indexing.rag_bbdd_vector_optimized import OptimizedRAGProcessor
+from core.analysis.pdf_validator import validate_pdf
 from config import get_config
 from logger import get_logger, log_info, log_error, log_warning
 

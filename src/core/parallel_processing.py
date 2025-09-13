@@ -77,8 +77,8 @@ def process_pdf_worker(pdf_path: str, worker_id: str, operations: List[str]) -> 
     result = ProcessingResult(worker_id=worker_id, input_data=pdf_path)
     
     try:
-        from pdf_validator import validate_pdf
-        from llm_utils import extract_paper_entities_safe
+        from core.analysis.pdf_validator import validate_pdf
+        from core.llm_utils import extract_paper_entities_safe
         from langchain_community.document_loaders import PyPDFLoader
         from langchain.text_splitter import RecursiveCharacterTextSplitter
         
